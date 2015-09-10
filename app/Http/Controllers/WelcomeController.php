@@ -10,7 +10,6 @@ use CodeCommerce\Http\Controllers\Controller;
 
 class WelcomeController extends Controller
 {
-
     private $categories;
 
     public function __construct(Category $category) {
