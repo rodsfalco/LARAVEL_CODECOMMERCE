@@ -17,6 +17,27 @@ Route::get('/', function () {
 
 Route::get('/exemplo', 'WelcomeController@exemplo');
 
-Route::get('/admin/categories', 'AdminCategoriesController@index');
+Route::pattern('id', '[0-9]+');
+Route::group(['prefix'=>'admin'], function() {
 
-Route::get('/admin/products', 'AdminProductsController@index');
+    Route::group(['prefix'=>'categories'], function() {
+
+        Route::get('/', ['as'=>'allCategories', 'uses'=>'AdminCategoriesController@index']);
+        Route::get('/create', ['as'=>'createCategories', 'uses'=>'AdminCategoriesController@create']);
+        Route::get('/read/{id}', ['as'=>'readCategories', 'uses'=>'AdminCategoriesController@read']);
+        Route::get('/update/{id}', ['as'=>'updateCategories', 'uses'=>'AdminCategoriesController@update']);
+        Route::get('/delete/{id}', ['as'=>'deleteCategories', 'uses'=>'AdminCategoriesController@delete']);
+
+    });
+
+    Route::group(['prefix'=>'products'], function() {
+
+        Route::get('/', ['as'=>'allProducts', 'uses'=>'AdminProductsController@index']);
+        Route::get('/create', ['as'=>'createProducts', 'uses'=>'AdminProductsController@create']);
+        Route::get('/read/{id}', ['as'=>'readProducts', 'uses'=>'AdminProductsController@read']);
+        Route::get('/update/{id}', ['as'=>'updateProducts', 'uses'=>'AdminProductsController@update']);
+        Route::get('/delete/{id}', ['as'=>'deleteProducts', 'uses'=>'AdminProductsController@delete']);
+
+    });
+
+});
