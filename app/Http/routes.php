@@ -15,7 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// #########################################################################
+
 Route::get('/exemplo', 'WelcomeController@exemplo');
+
+// #########################################################################
 
 Route::pattern('id', '[0-9]+');
 Route::group(['prefix'=>'admin'], function() {
@@ -41,3 +45,8 @@ Route::group(['prefix'=>'admin'], function() {
     });
 
 });
+
+// #########################################################################
+
+Route::get('categories','CategoriesController@index');
+Route::get('categories/create','CategoriesController@create');
