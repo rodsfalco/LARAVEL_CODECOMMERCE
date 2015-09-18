@@ -26,6 +26,7 @@
 
         <div class="form-group">
             {!! Form::submit('Save Category', ['class'=>'btn btn-primary']) !!}
+            <a href="{{ route('categories.index') }}" class="btn btn-default">Cancel</a>
         </div>
 
         {!! Form::close() !!}

@@ -21,11 +21,12 @@
 
         <div class="form-group">
             {!! Form::label('description', 'Description:') !!}
-            {!! Form::textarea('description', null, ['class'=>'form-control']) !!}
+            {!! Form::textarea('description', null, ['class'=>'form-control','rows'=>'3']) !!}
         </div>
 
         <div class="form-group">
             {!! Form::submit('Add Category', ['class'=>'btn btn-primary']) !!}
+            <a href="{{ route('categories.index') }}" class="btn btn-default">Cancel</a>
         </div>
 
         {!! Form::close() !!}
