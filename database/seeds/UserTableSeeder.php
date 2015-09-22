@@ -1,21 +1,15 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Rodrigo
- * Date: 21/09/2015
- * Time: 15:28
- */
-
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-use CodeCommerce\User;
-use Faker\Factory as Faker;
 
 class UserTableSeeder extends Seeder
 {
     public function run() {
         DB::table('users')->truncate();
+
+        factory('CodeCommerce\User', 3)->create();
+
+        /* #### EXEMPLO USANDO FAKER ####
 
         $faker = Faker::create();
 
@@ -26,6 +20,7 @@ class UserTableSeeder extends Seeder
                 'password'=>Hash::make($faker->word())
             ]);
         }
+        */
     }
 
 }
