@@ -7,7 +7,7 @@ class CategoryTableSeeder extends Seeder
     public function run() {
         DB::table('categories')->truncate();
 
-        factory('CodeCommerce\Category', 5)->create();
+        factory('CodeCommerce\Category', 15)->create();
 
         /* #### EXEMPLO USANDO FAKER ####
 

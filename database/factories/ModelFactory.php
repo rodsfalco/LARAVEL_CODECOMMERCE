@@ -31,8 +31,9 @@ $factory->define(CodeCommerce\Product::class, function (Faker\Generator $faker) 
     return [
         'name' => $faker->word,
         'description' => $faker->sentence,
-        'price' => $faker->numberBetween(0, 999).'.'.$faker->numberBetween(0, 99),
+        'price' => $faker->randomNumber(2),
         'featured' => $faker->numberBetween(1, 10) % 2 == 0 ? 'Y' : 'N',
         'recommend' => $faker->numberBetween(1, 10) % 2 == 0 ? 'Y' : 'N',
+        'category_id' => $faker->numberBetween(1, 15),
     ];
 });

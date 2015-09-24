@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::pattern('id', '[0-9]+');
-Route::group(['prefix'=>'admin'], function() {
+// Route::pattern('id', '[0-9]+');
+Route::group(['prefix'=>'admin', 'where'=>['id'=>'[0-9]+']], function() {
 
     Route::group(['prefix'=>'categories'], function() {
 
