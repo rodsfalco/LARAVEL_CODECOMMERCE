@@ -51,6 +51,11 @@
         </div>
 
         <div class="form-group">
+            {!! Form::label('tag_list', 'Tags:') !!}
+            {!! Form::textarea('tag_list', $product->tag_list, ['class'=>'form-control','rows'=>'2']) !!}
+        </div>
+
+        <div class="form-group">
             {!! Form::submit('Save Product', ['class'=>'btn btn-primary']) !!}
             <a href="{{ route('products.index') }}" class="btn btn-default">Cancel</a>
         </div>

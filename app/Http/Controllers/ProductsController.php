@@ -7,15 +7,19 @@ use CodeCommerce\Http\Requests\ProductImageRequest;
 use CodeCommerce\Http\Requests\ProductRequest;
 use CodeCommerce\Product;
 use CodeCommerce\ProductImage;
+use CodeCommerce\Tag;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
     private $productModel;
+    private $tagModel;
 
-    public function __construct(Product $productModel) {
+    public function __construct(Product $productModel, Tag $tagModel) {
         $this->productModel = $productModel;
+        $this->tagModel = $tagModel;
     }
 
     public function index() {
@@ -31,10 +35,19 @@ class ProductsController extends Controller
     }
 
     public function store(ProductRequest $request) {
-        $input = $request->all();
+        $input = $request->except('tags_prod');
 
         $product = $this->productModel->fill($input);
         $product->save();
+
+        if($request->has('tag_list')) {
+            $tags_array = explode(',', $request->input('tag_list'));
+
+            foreach($tags_array as $tag) {
+                $t = $this->tagModel->create(['name' => $tag]);
+                $product->tags()->attach($t);
+            }
+        }
 
         return redirect()->route('products.index');
     }

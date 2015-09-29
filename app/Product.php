@@ -3,6 +3,7 @@
 namespace CodeCommerce;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Product extends Model
 {
@@ -28,7 +29,7 @@ class Product extends Model
     }
 
     public function getTagListAttribute() {
-        $tags = $this->tags->lists('name');
+        $tags = $this->tags()->lists('name')->all();
 
         return implode(',', $tags);
     }
