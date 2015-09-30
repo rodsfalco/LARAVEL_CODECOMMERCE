@@ -8,6 +8,7 @@ use CodeCommerce\Http\Requests\ProductRequest;
 use CodeCommerce\Product;
 use CodeCommerce\ProductImage;
 use CodeCommerce\Tag;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -41,12 +42,7 @@ class ProductsController extends Controller
         $product->save();
 
         if($request->has('tag_list')) {
-            $tags_array = explode(',', $request->input('tag_list'));
-
-            foreach($tags_array as $tag) {
-                $t = $this->tagModel->create(['name' => $tag]);
-                $product->tags()->attach($t);
-            }
+            $this->tagsControl($product, $request->input('tag_list'), true);
         }
 
         return redirect()->route('products.index');
@@ -60,9 +56,40 @@ class ProductsController extends Controller
     }
 
     public function update(ProductRequest $request, $id) {
-        $this->productModel->find($id)->update($request->all());
+        $product = $this->productModel->find($id);
+        $product->update($request->except('tags_prod'));
+
+        if($request->has('tag_list')) {
+            $this->tagsControl($product, $request->input('tag_list'), false);
+        } else if(count($product->tags) > 0) {
+            $product->tags()->detach();
+        }
 
         return redirect()->route('products.index');
+    }
+
+    /*
+     * Faz a inclusão das tags, se necessário, e então adiciona a referência ao produto.
+     */
+    private function tagsControl($product, $tagList, $isCreate) {
+        $tags_array = explode(',', $tagList);
+        $ids_array = array();
+        foreach($tags_array as $tag) {
+            if(!empty(trim($tag))) {
+                try {
+                    $t = $this->tagModel->where('name', 'like', trim($tag))->firstOrFail();
+                } catch (ModelNotFoundException $ex) {
+                    $t = $this->tagModel->create(['name' => trim($tag)]);
+                }
+                array_push($ids_array, $t->id);
+            }
+        }
+
+        if($isCreate) {
+            $product->tags()->attach($ids_array);
+        } else {
+            $product->tags()->sync($ids_array);
+        }
     }
 
     public function destroy($id) {
