@@ -3,6 +3,7 @@
 namespace CodeCommerce\Http\Controllers;
 
 use CodeCommerce\Category;
+use CodeCommerce\Product;
 use Illuminate\Http\Request;
 
 use CodeCommerce\Http\Requests;
@@ -13,8 +14,10 @@ class StoreController extends Controller
 
     public function index() {
         $categories = Category::all();
+        $pFeatured = Product::featured()->get();
+        $pRecommended = Product::recommended()->get();
 
-        return view('store.index', compact('categories'));
+        return view('store.index', compact('categories','pFeatured','pRecommended'));
     }
 
 }

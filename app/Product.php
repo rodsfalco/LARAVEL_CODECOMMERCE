@@ -33,4 +33,12 @@ class Product extends Model
 
         return implode(',', $tags);
     }
+
+    public function scopeFeatured($query) {
+        return $query->where('featured','=','Y');
+    }
+
+    public function scopeRecommended($query) {
+        return $query->where('recommend','=','Y');
+    }
 }
