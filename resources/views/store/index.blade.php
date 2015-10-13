@@ -1,7 +1,7 @@
 @extends('store.store')
 
 @section('categories')
-    @include('store.categories_partial')
+    @include('store.partial.categories')
 @stop
 
 @section('content')
@@ -9,18 +9,14 @@
         <div class="features_items"><!--features_items-->
             <h2 class="title text-center">Em destaque</h2>
 
-            @foreach($pFeatured as $product)
-                @include('store.product_partial')
-            @endforeach
+            @include('store.partial.product', ['products' => $pFeatured])
 
         </div><!--features_items-->
 
         <div class="features_items"><!--recommended-->
             <h2 class="title text-center">Recomendados</h2>
 
-            @foreach($pRecommended as $product)
-                @include('store.product_partial')
-            @endforeach
+            @include('store.partial.product', ['products' => $pRecommended])
 
         </div><!--recommended-->
 

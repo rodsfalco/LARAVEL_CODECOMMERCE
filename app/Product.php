@@ -45,4 +45,5 @@ class Product extends Model
     public function scopeByCategory($query, $id) {
         return $query->where('category_id', $id);
     }
+
 }

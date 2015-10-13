@@ -1,7 +1,7 @@
 @extends('store.store')
 
 @section('categories')
-    @include('store.categories_partial')
+    @include('store.partial.categories')
 @stop
 
 @section('content')
@@ -9,9 +9,7 @@
         <div class="features_items">
             <h2 class="title text-center">{{ $category->name }}</h2>
 
-            @foreach($products as $product)
-                @include('store.product_partial')
-            @endforeach
+            @include('store.partial.product', ['products' => $products])
         </div>
     </div>
 @stop
