@@ -9,7 +9,6 @@
                 <table class="table table-condensed">
                     <thead>
                         <tr class="cart_menu">
-                            <td class="image">Item</td>
                             <td></td>
                             <td>Preço</td>
                             <td>Quantidade</td>
@@ -20,11 +19,6 @@
                     <tbody>
                         @forelse($cart->all() as $k=>$item)
                             <tr>
-                                <td class="cart_product">
-                                    <a href="{{ route('store.product', ['id' => $k]) }}">
-                                        Imagem
-                                    </a>
-                                </td>
                                 <td>
                                     <h4><a href="{{ route('store.product', ['id' => $k]) }}">{{ $item['name'] }}</a></h4>
                                     <p>Código: {{ $k }}</p>
@@ -34,28 +28,36 @@
                                 </td>
                                 <td>
                                     {{ $item['qtd'] }}
+                                    <a href="{{ route('cart.update', ['id' => $k , 'qtd' => $item['qtd']+1]) }}" class="label label-success" >˄</a>
+                                    @if($item['qtd'] > 0)
+                                        <a href="{{ route('cart.update', ['id' => $k , 'qtd' => $item['qtd']-1]) }}" class="label label-danger">˅</a>
+                                    @endif
                                 </td>
                                 <td>
                                     <p class="cart_total_price">
                                         R$ {{ number_format($item['qtd'] * $item['price'], 2, ",", ".") }}
                                     </p>
                                 </td>
-                                <td class="cart_delete">
-                                    <a href="{{ route('cart.destroy', ['id' => $k]) }}">Remover</a>
+                                <td>
+                                    <div class="pull-right">
+                                        <a href="{{ route('cart.destroy', ['id' => $k]) }}" class="btn btn-default">Remover</a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6">
+                                <td colspan="5">
                                     Nenhum item encontrado.
                                 </td>
                             </tr>
                         @endforelse
 
                         <tr class="cart_menu">
-                            <td colspan="4"></td>
+                            <td colspan="3"></td>
                             <td>
-                                R$ {{ number_format($cart->getTotal(), 2, ",", ".") }}
+                                <p class="cart_total_price" style="color:white;">
+                                    R$ {{ number_format($cart->getTotal(), 2, ",", ".") }}
+                                </p>
                             </td>
                             <td>
                                 <div class="pull-right">
