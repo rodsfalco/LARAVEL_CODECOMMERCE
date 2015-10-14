@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($cart->all() as $k=>$item)
+                        @forelse($cart->all() as $k=>$item)
                             <tr>
                                 <td class="cart_product">
                                     <a href="{{ route('store.product', ['id' => $k]) }}">
@@ -30,21 +30,39 @@
                                     <p>Código: {{ $k }}</p>
                                 </td>
                                 <td>
-                                    R$ {{ $item['price'] }}
+                                    R$ {{ number_format($item['price'], 2, ",", ".") }}
                                 </td>
                                 <td>
                                     {{ $item['qtd'] }}
                                 </td>
                                 <td>
                                     <p class="cart_total_price">
-                                        R$ {{ $item['qtd'] * $item['price'] }}
+                                        R$ {{ number_format($item['qtd'] * $item['price'], 2, ",", ".") }}
                                     </p>
                                 </td>
                                 <td class="cart_delete">
                                     <a href="{{ route('cart.destroy', ['id' => $k]) }}">Remover</a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6">
+                                    Nenhum item encontrado.
+                                </td>
+                            </tr>
+                        @endforelse
+
+                        <tr class="cart_menu">
+                            <td colspan="4"></td>
+                            <td>
+                                R$ {{ number_format($cart->getTotal(), 2, ",", ".") }}
+                            </td>
+                            <td>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-success">Fechar a conta</a>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
