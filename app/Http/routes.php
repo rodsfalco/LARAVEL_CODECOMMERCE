@@ -44,3 +44,5 @@ Route::get('cart',                          ['as'=>'cart', 'uses'=>'CartControll
 Route::get('cart/add/{id}',                 ['as'=>'cart.add', 'uses'=>'CartController@add']);
 Route::get('cart/destroy/{id}',             ['as'=>'cart.destroy', 'uses'=>'CartController@destroy']);
 Route::get('cart/update/{id}/{qtd}',        ['as'=>'cart.update', 'uses'=>'CartController@update']);
+
+Route::get('checkout/placeOrder',           ['as'=>'checkout.place', 'uses'=>'CheckoutController@place']);
