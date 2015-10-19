@@ -1,7 +1,7 @@
 <?php
 
 // Route::pattern('id', '[0-9]+');
-Route::group(['prefix'=>'admin', 'where'=>['id'=>'[0-9]+']], function() {
+Route::group(['prefix'=>'admin', 'middleware'=>'auth', 'where'=>['id'=>'[0-9]+']], function() {
 
     Route::group(['prefix'=>'categories'], function() {
 
@@ -46,3 +46,8 @@ Route::get('cart/destroy/{id}',             ['as'=>'cart.destroy', 'uses'=>'Cart
 Route::get('cart/update/{id}/{qtd}',        ['as'=>'cart.update', 'uses'=>'CartController@update']);
 
 Route::get('checkout/placeOrder',           ['as'=>'checkout.place', 'uses'=>'CheckoutController@place']);
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController'
+]);
