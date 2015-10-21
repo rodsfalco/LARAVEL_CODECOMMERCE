@@ -61,7 +61,7 @@
                             </td>
                             <td>
                                 <div class="pull-right">
-                                    <a href="{{ route('checkout.place') }}" class="btn btn-success">Fechar a conta</a>
+                                    <a href="{{ route('checkout.place') }}" class="btn btn-success">Fechar carrinho</a>
                                 </div>
                             </td>
                         </tr>

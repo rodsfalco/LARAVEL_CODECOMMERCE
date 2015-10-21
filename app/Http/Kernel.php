@@ -29,5 +29,6 @@ class Kernel extends HttpKernel
         'auth' => \CodeCommerce\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \CodeCommerce\Http\Middleware\RedirectIfAuthenticated::class,
+        'user.admin' => \CodeCommerce\Http\Middleware\UserAdmin::class,
     ];
 }

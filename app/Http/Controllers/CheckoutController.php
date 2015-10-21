@@ -2,12 +2,9 @@
 
 namespace CodeCommerce\Http\Controllers;
 
-use CodeCommerce\Order;
-use CodeCommerce\OrderItem;
-use Illuminate\Http\Request;
-
 use CodeCommerce\Http\Requests;
-use CodeCommerce\Http\Controllers\Controller;
+use CodeCommerce\Order;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
@@ -17,7 +14,7 @@ class CheckoutController extends Controller
         $this->middleware('auth');
     }
 
-    public function place(Order $orderModel, OrderItem $orderItemModel) {
+    public function place(Order $orderModel) {
         if(!Session::has('cart')) {
             return false;
         }
@@ -31,7 +28,11 @@ class CheckoutController extends Controller
                 $order->items()->create(['product_id' => $k, 'price' => $item['price'], 'qtd' => $item['qtd']]);
             }
 
-            dd($order->items);
+            Session::forget('cart');
+
+            return view('store.order', compact('order'));
+        } else {
+            return redirect()->route('cart');
         }
     }
 
