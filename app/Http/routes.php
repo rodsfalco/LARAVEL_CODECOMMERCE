@@ -34,6 +34,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','user.admin'], 'where
 
     });
 
+    Route::group(['prefix'=>'orders'], function() {
+
+        Route::get('/',                 ['as'=>'orders.index', 'uses'=>'OrdersController@index']);
+
+    });
+
 });
 
 Route::get('/', 'StoreController@index');

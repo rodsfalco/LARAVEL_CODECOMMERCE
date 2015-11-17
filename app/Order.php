@@ -17,4 +17,12 @@ class Order extends Model
         return $this->belongsTo('CodeCommerce\User');
     }
 
+    public function getStatusStrAttribute() {
+        if($this->status == 0) {
+            return 'Aberto';
+        }
+
+        return 'Outro';
+    }
+
 }
