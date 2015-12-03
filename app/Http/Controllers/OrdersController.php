@@ -22,4 +22,22 @@ class OrdersController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    public function trocarStatus($id) {
+        $order = $this->orderModel->find($id);
+
+        $order->status = $order->status + 1;
+        $order->save();
+
+        return redirect()->route('orders.index');
+    }
+
+    public function cancelar($id) {
+        $order = $this->orderModel->find($id);
+
+        $order->status = '5';
+        $order->save();
+
+        return redirect()->route('orders.index');
+    }
+
 }
